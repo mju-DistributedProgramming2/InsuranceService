@@ -22,16 +22,15 @@ import java.rmi.RemoteException;
 public class InsuranceController {
     @Autowired
     InsuranceService insuranceService;
-
     @GetMapping("/list/insurances")
     public GetInsuranceListResponse getInsuranceList() throws RemoteException, TimeDelayException, EmptyListException {
         return new GetInsuranceListResponse(this.insuranceService.getInsuranceList());
     }
-    @GetMapping("/list/insurances-by-status")
+    @GetMapping("/list/insurances")
     public GetInsuranceListResponse getInsuranceList(@RequestBody InsuranceStatus insuranceStatus) throws RemoteException, EmptyListException, TimeDelayException {
         return new GetInsuranceListResponse(this.insuranceService.getInsuranceList(insuranceStatus));
     }
-    @GetMapping("/list/insurances-by-type")
+    @GetMapping("/list/insurances")
     public GetInsuranceListResponse getInsuranceList(@RequestBody InsuranceType type, InsuranceStatus status) throws RemoteException, EmptyListException, TimeDelayException {
         return new GetInsuranceListResponse(this.insuranceService.getInsuranceList(type, status));
     }
@@ -39,7 +38,6 @@ public class InsuranceController {
     public GetInsuranceResponse getInsurance(int selectedInsuranceId) throws RemoteException, NoDataException {
         return new GetInsuranceResponse(this.insuranceService.getInsurance(selectedInsuranceId));
     }
-
     @PostMapping("/insurances")
     public MakeInsuranceResponse makeInsurance(@RequestBody Insurance insurance) throws RemoteException, DataDuplicationException {
         return new MakeInsuranceResponse(this.insuranceService.makeInsurance(insurance));
