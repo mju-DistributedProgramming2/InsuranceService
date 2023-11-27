@@ -26,14 +26,6 @@ public class InsuranceController {
     public GetInsuranceListResponse getInsuranceList() throws RemoteException, TimeDelayException, EmptyListException {
         return new GetInsuranceListResponse(this.insuranceService.getInsuranceList());
     }
-    @GetMapping("/list/insurances")
-    public GetInsuranceListResponse getInsuranceList(@RequestBody InsuranceStatus insuranceStatus) throws RemoteException, EmptyListException, TimeDelayException {
-        return new GetInsuranceListResponse(this.insuranceService.getInsuranceList(insuranceStatus));
-    }
-    @GetMapping("/list/insurances")
-    public GetInsuranceListResponse getInsuranceList(@RequestBody InsuranceType type, InsuranceStatus status) throws RemoteException, EmptyListException, TimeDelayException {
-        return new GetInsuranceListResponse(this.insuranceService.getInsuranceList(type, status));
-    }
     @GetMapping("/insurances")
     public GetInsuranceResponse getInsurance(int selectedInsuranceId) throws RemoteException, NoDataException {
         return new GetInsuranceResponse(this.insuranceService.getInsurance(selectedInsuranceId));
