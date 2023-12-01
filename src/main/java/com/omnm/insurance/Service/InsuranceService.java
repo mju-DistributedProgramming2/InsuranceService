@@ -1,0 +1,89 @@
+package com.omnm.insurance.Service;
+
+import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
+import com.omnm.insurance.enumeration.insurance.InsuranceType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.omnm.insurance.DAO.InsuranceDAO;
+import com.omnm.insurance.Entity.Insurance;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class InsuranceService implements InsuranceServiceIF {
+    @Autowired
+    InsuranceDAO insuranceDAO;
+
+    @Override
+    public ResponseEntity<List<Insurance>> getInsuranceList() {
+        long beforeTime = System.currentTimeMillis();
+        List<Insurance> insuranceList = this.insuranceDAO.findInsurance();
+        if(insuranceList.isEmpty()) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(404));
+//        try {Thread.sleep(7000);}
+//        catch (InterruptedException e) {throw new RuntimeException(e);}
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime)/1000;
+        if(secDiffTime>=7) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(500));
+        return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+    @Override
+    public ResponseEntity<List<Insurance>> getInsuranceListByInsuranceStatus(InsuranceStatus insuranceStatus) {
+        long beforeTime = System.currentTimeMillis();
+        List<Insurance> insuranceList = this.insuranceDAO.findByStatus(insuranceStatus);
+        if(insuranceList.isEmpty()) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(404));
+//        try {Thread.sleep(7000);}
+//        catch (InterruptedException e) {throw new RuntimeException(e);}
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime)/1000;
+        if(secDiffTime>=7) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(500));
+        return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+    @Override
+    public ResponseEntity<List<Insurance>> getInsuranceListByInsuranceTypeAndInsuranceStatus(InsuranceType type, InsuranceStatus status) {
+        long beforeTime = System.currentTimeMillis();
+        ArrayList<Insurance> insuranceList = new ArrayList<>();
+        for(Insurance insurance : this.insuranceDAO.findByStatus(status)){
+            if(insurance.getType()==type) insuranceList.add(insurance);
+        }
+        if(insuranceList.isEmpty()) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(404));
+
+//        try {Thread.sleep(7000);}
+//        catch (InterruptedException e) {throw new RuntimeException(e);}
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime)/1000;
+        if(secDiffTime>=7) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(500));
+
+        return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+    @Override
+    public ResponseEntity<Insurance> getInsuranceById(Integer selectedInsuranceId) {
+        Insurance insurance = this.insuranceDAO.findById(selectedInsuranceId);
+        if(insurance == null) return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.valueOf(404));
+        return new ResponseEntity<>(insurance, new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+    @Override
+    public ResponseEntity<Integer> postInsurance(Insurance insurance) {
+        Insurance findByNameInsurance = this.insuranceDAO.findByName(insurance.getName());
+        if(findByNameInsurance != null) return new ResponseEntity<>(insurance.getId(), new HttpHeaders(), HttpStatus.valueOf(500));
+        else insuranceDAO.createInsurance(insurance);
+        return new ResponseEntity<>(insurance.getId(), new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+    @Override
+    public ResponseEntity<Boolean> patchInsuranceStatusInInsuranceById(Integer id, InsuranceStatus status) {
+        Insurance insurance = this.insuranceDAO.findById(id);
+        insurance.setStatus(status);
+        this.insuranceDAO.updateInsuranceStatusInInsuranceById(id, status);
+        return new ResponseEntity<>(this.insuranceDAO.findById(id).getStatus() == status, new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+    @Override
+    public ResponseEntity<Boolean> getInsuranceByName(String name) {
+        Insurance findByNameInsurance = this.insuranceDAO.findByName(name);
+        if(findByNameInsurance != null) return new ResponseEntity<>(false, new HttpHeaders(), HttpStatus.valueOf(500));
+        return new ResponseEntity<>(true, new HttpHeaders(), HttpStatus.valueOf(200));
+    }
+}

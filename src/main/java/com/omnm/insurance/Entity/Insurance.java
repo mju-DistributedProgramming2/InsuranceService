@@ -10,19 +10,19 @@ import javax.persistence.*;
 public class Insurance implements Serializable {
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private String name;
 	private InsuranceType type;
 	private String target;
 	@Column(name = "calculation_formula_id", nullable = false)
-	private int calculationFormulaId;
+	private Integer calculationFormulaId;
 	@Column(name = "compensate_condition", nullable = false)
 	private String compensateCondition;
 	@Column(name = "not_compensate_condition", nullable = false)
 	private String notCompensateCondition;
 	private InsuranceStatus status;
 
-	public Insurance(String name, InsuranceType type, String target, int calculationFormulaId,
+	public Insurance(String name, InsuranceType type, String target, Integer calculationFormulaId,
 					 String compensateCondition, String notCompensateCondition, InsuranceStatus status) {
 		this.name = name;
 		this.type = type;
@@ -38,11 +38,11 @@ public class Insurance implements Serializable {
 	}
 
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -70,11 +70,11 @@ public class Insurance implements Serializable {
 		this.target = target;
 	}
 
-	public int getCalculationFormulaId() {
+	public Integer getCalculationFormulaId() {
 		return calculationFormulaId;
 	}
 
-	public void setCalculationFormulaId(int calculationFormulaId) {
+	public void setCalculationFormulaId(Integer calculationFormulaId) {
 		this.calculationFormulaId = calculationFormulaId;
 	}
 
