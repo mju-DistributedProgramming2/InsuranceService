@@ -33,7 +33,7 @@ public class InsuranceController {
                 getInsuranceListByInsuranceTypeAndInsuranceStatusRequest.getType(),
                 getInsuranceListByInsuranceTypeAndInsuranceStatusRequest.getStatus());
     }
-        @GetMapping("/insurance/{selectedInsuranceId}")
+    @GetMapping("/insurance/{selectedInsuranceId}")
     public ResponseEntity<Insurance> getInsuranceById(@PathVariable Integer selectedInsuranceId) {
         return this.insuranceService.getInsuranceById(selectedInsuranceId);
     }
@@ -41,7 +41,7 @@ public class InsuranceController {
     public ResponseEntity<Integer> postInsurance(@RequestBody Insurance insurance) {
         return this.insuranceService.postInsurance(insurance);
     }
-    @PostMapping("/authorization")
+    @PatchMapping("/authorization")
     public ResponseEntity<Boolean> patchInsuranceStatusInInsuranceById(@RequestBody HashMap<String, String> param) {
         Integer id = Integer.valueOf(param.get("id"));
         InsuranceStatus status = InsuranceStatus.valueOf(param.get("status"));
