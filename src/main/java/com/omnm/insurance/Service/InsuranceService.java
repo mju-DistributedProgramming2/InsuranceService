@@ -1,5 +1,6 @@
 package com.omnm.insurance.Service;
 
+import com.omnm.insurance.DTO.InsuranceList;
 import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
 import com.omnm.insurance.enumeration.insurance.InsuranceType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,47 +19,46 @@ import java.util.List;
 public class InsuranceService implements InsuranceServiceIF {
     @Autowired
     InsuranceDAO insuranceDAO;
-
     @Override
-    public ResponseEntity<List<Insurance>> getInsuranceList() {
+    public ResponseEntity<InsuranceList> getInsuranceList() {
         long beforeTime = System.currentTimeMillis();
         List<Insurance> insuranceList = this.insuranceDAO.findInsurance();
-        if(insuranceList.isEmpty()) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(404));
+        if(insuranceList.isEmpty()) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(404));
 //        try {Thread.sleep(7000);}
 //        catch (InterruptedException e) {throw new RuntimeException(e);}
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
-        if(secDiffTime>=7) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(500));
-        return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(200));
+        if(secDiffTime>=7) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(500));
+        return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(200));
     }
     @Override
-    public ResponseEntity<List<Insurance>> getInsuranceListByInsuranceStatus(InsuranceStatus insuranceStatus) {
+    public ResponseEntity<InsuranceList> getInsuranceListByInsuranceStatus(InsuranceStatus insuranceStatus) {
         long beforeTime = System.currentTimeMillis();
         List<Insurance> insuranceList = this.insuranceDAO.findByStatus(insuranceStatus);
-        if(insuranceList.isEmpty()) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(404));
+        if(insuranceList.isEmpty()) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(404));
 //        try {Thread.sleep(7000);}
 //        catch (InterruptedException e) {throw new RuntimeException(e);}
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
-        if(secDiffTime>=7) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(500));
-        return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(200));
+        if(secDiffTime>=7) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(500));
+        return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(200));
     }
     @Override
-    public ResponseEntity<List<Insurance>> getInsuranceListByInsuranceTypeAndInsuranceStatus(InsuranceType type, InsuranceStatus status) {
+    public ResponseEntity<InsuranceList> getInsuranceListByInsuranceTypeAndInsuranceStatus(InsuranceType type, InsuranceStatus status) {
         long beforeTime = System.currentTimeMillis();
         ArrayList<Insurance> insuranceList = new ArrayList<>();
         for(Insurance insurance : this.insuranceDAO.findByStatus(status)){
             if(insurance.getType()==type) insuranceList.add(insurance);
         }
-        if(insuranceList.isEmpty()) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(404));
+        if(insuranceList.isEmpty()) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(404));
 
 //        try {Thread.sleep(7000);}
 //        catch (InterruptedException e) {throw new RuntimeException(e);}
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
-        if(secDiffTime>=7) return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(500));
+        if(secDiffTime>=7) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(500));
 
-        return new ResponseEntity<>(insuranceList, new HttpHeaders(), HttpStatus.valueOf(200));
+        return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(200));
     }
     @Override
     public ResponseEntity<Insurance> getInsuranceById(Integer selectedInsuranceId) {

@@ -1,5 +1,6 @@
 package com.omnm.insurance.Service;
 
+import com.omnm.insurance.DTO.InsuranceList;
 import com.omnm.insurance.enumeration.insurance.InsuranceType;
 import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
 import com.omnm.insurance.Entity.Insurance;
@@ -9,11 +10,11 @@ import java.util.List;
 
 public interface InsuranceServiceIF {
 
-    ResponseEntity<List<Insurance>> getInsuranceList();
+    ResponseEntity<InsuranceList> getInsuranceList();
 
-    ResponseEntity<List<Insurance>> getInsuranceListByInsuranceStatus(InsuranceStatus insuranceStatus);
+    ResponseEntity<InsuranceList> getInsuranceListByInsuranceStatus(InsuranceStatus insuranceStatus);
 
-    ResponseEntity<List<Insurance>> getInsuranceListByInsuranceTypeAndInsuranceStatus(InsuranceType type, InsuranceStatus status);
+    ResponseEntity<InsuranceList> getInsuranceListByInsuranceTypeAndInsuranceStatus(InsuranceType type, InsuranceStatus status);
 
     ResponseEntity<Insurance> getInsuranceById(Integer selectedInsuranceId);
 

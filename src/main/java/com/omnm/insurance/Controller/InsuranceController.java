@@ -1,6 +1,7 @@
 package com.omnm.insurance.Controller;
 
 
+import com.omnm.insurance.DTO.InsuranceList;
 import com.omnm.insurance.Entity.Insurance;
 import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
 import com.omnm.insurance.Service.InsuranceService;
@@ -19,7 +20,7 @@ public class InsuranceController {
     @Autowired
     InsuranceService insuranceService;
     @GetMapping("/list/insurances")
-    public ResponseEntity<List<Insurance>> getInsuranceList() {
+    public ResponseEntity<InsuranceList> getInsuranceList() {
         return this.insuranceService.getInsuranceList();
     }
     @GetMapping("/insurances")
