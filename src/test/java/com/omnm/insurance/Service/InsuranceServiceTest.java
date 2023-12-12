@@ -80,28 +80,28 @@ class InsuranceServiceTest {
     void testGetInsuranceById() {
         Integer selectedInsuranceId = 1;
         Insurance insurance = new Insurance();
-        when(insuranceDAO.findById(selectedInsuranceId)).thenReturn(insurance);
+        when(insuranceDAO.findInsuranceById(selectedInsuranceId)).thenReturn(insurance);
 
         ResponseEntity<Insurance> response = insuranceService.getInsuranceById(selectedInsuranceId);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(insurance, response.getBody());
 
-        verify(insuranceDAO, times(1)).findById(selectedInsuranceId);
+        verify(insuranceDAO, times(1)).findInsuranceById(selectedInsuranceId);
         System.out.println("testGetInsuranceById 테스트 성공");
     }
 
     @Test
     void testPostInsurance() {
         Insurance insurance = new Insurance();
-        when(insuranceDAO.findByName(any())).thenReturn(null);
+        when(insuranceDAO.findInsuranceByName(any())).thenReturn(null);
 
         ResponseEntity<Integer> response = insuranceService.postInsurance(insurance);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(insurance.getId(), response.getBody());
 
-        verify(insuranceDAO, times(1)).findByName(any());
+        verify(insuranceDAO, times(1)).findInsuranceByName(any());
         verify(insuranceDAO, times(1)).createInsurance(insurance);
         System.out.println("testPostInsurance 테스트 성공");
     }
@@ -112,14 +112,14 @@ class InsuranceServiceTest {
         InsuranceStatus status = InsuranceStatus.UnderAuthorize;
         Insurance insurance = new Insurance();
 
-        when(insuranceDAO.findById(id)).thenReturn(insurance);
+        when(insuranceDAO.findInsuranceById(id)).thenReturn(insurance);
 
         ResponseEntity<Boolean> response = insuranceService.patchInsuranceStatusInInsuranceById(id, status);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.getBody());
 
-        verify(insuranceDAO, times(1)).findById(id);
+        verify(insuranceDAO, times(1)).findInsuranceById(id);
         verify(insuranceDAO, times(1)).updateInsuranceStatusInInsuranceById(id, status);
         System.out.println("testPatchInsuranceStatusInInsuranceById 테스트 성공");
     }
@@ -127,14 +127,14 @@ class InsuranceServiceTest {
     @Test
     void testGetInsuranceByName() {
         String name = "SampleInsuranceName";
-        when(insuranceDAO.findByName(name)).thenReturn(null);
+        when(insuranceDAO.findInsuranceByName(name)).thenReturn(null);
 
         ResponseEntity<Boolean> response = insuranceService.getInsuranceByName(name);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.getBody());
 
-        verify(insuranceDAO, times(1)).findByName(name);
+        verify(insuranceDAO, times(1)).findInsuranceByName(name);
         System.out.println("testGetInsuranceByName 테스트 성공");
     }
 }

@@ -12,4 +12,6 @@ public interface InsuranceRepository extends JpaRepository<Insurance,Integer> {
     Insurance findById(int insuranceId);
     Insurance findByName(String name);
     List<Insurance> findByStatus(InsuranceStatus status);
+
+    Insurance findInsuranceById(Integer id);
 }

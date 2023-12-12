@@ -18,17 +18,17 @@ public class InsuranceDAO {
 		return this.insuranceRepository.findAll();
 	}
 	public void updateInsuranceStatusInInsuranceById(Integer id, InsuranceStatus status) {
-		Insurance insurance = this.findById(id);
+		Insurance insurance = this.findInsuranceById(id);
 		insurance.setStatus(status);
 		this.insuranceRepository.save(insurance);
 	}
 	public List<Insurance> findByStatus(InsuranceStatus insuranceStatus) {
 		return this.insuranceRepository.findByStatus(insuranceStatus);
 	}
-	public Insurance findById(Integer id) {
-		return this.insuranceRepository.findById(id).get();
+	public Insurance findInsuranceById(Integer id) {
+		return this.insuranceRepository.findInsuranceById(id);
 	}
-	public Insurance findByName(String name) {
+	public Insurance findInsuranceByName(String name) {
 		return this.insuranceRepository.findByName(name);
 	}
 }
