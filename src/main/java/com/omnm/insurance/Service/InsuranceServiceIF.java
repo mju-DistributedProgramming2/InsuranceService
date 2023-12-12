@@ -1,8 +1,8 @@
 package com.omnm.insurance.Service;
 
 import com.omnm.insurance.DTO.InsuranceList;
-import com.omnm.insurance.enumeration.insurance.InsuranceType;
-import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
+import com.omnm.insurance.enumeration.InsuranceType;
+import com.omnm.insurance.enumeration.InsuranceStatus;
 import com.omnm.insurance.Entity.Insurance;
 import org.springframework.http.ResponseEntity;
 

@@ -1,8 +1,8 @@
 package com.omnm.insurance.Entity;
 
 import java.io.Serializable;
-import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
-import com.omnm.insurance.enumeration.insurance.InsuranceType;
+import com.omnm.insurance.enumeration.InsuranceStatus;
+import com.omnm.insurance.enumeration.InsuranceType;
 import javax.persistence.*;
 
 @Entity

@@ -3,9 +3,9 @@ package com.omnm.insurance.Controller;
 import com.omnm.insurance.DTO.GetInsuranceListByInsuranceTypeAndInsuranceStatusRequest;
 import com.omnm.insurance.DTO.InsuranceList;
 import com.omnm.insurance.Entity.Insurance;
-import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
+import com.omnm.insurance.enumeration.InsuranceStatus;
 import com.omnm.insurance.Service.InsuranceService;
-import com.omnm.insurance.enumeration.insurance.InsuranceType;
+import com.omnm.insurance.enumeration.InsuranceType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -57,6 +58,7 @@ class InsuranceControllerTest {
 
         verify(insuranceService, times(1)).getInsuranceList();
         verifyNoMoreInteractions(insuranceService);
+        System.out.println("testGetInsuranceList 테스트 성공");
     }
 
     @Test
@@ -84,6 +86,7 @@ class InsuranceControllerTest {
 
         verify(insuranceService, times(1)).getInsuranceListByInsuranceStatus(insuranceStatus);
         verifyNoMoreInteractions(insuranceService);
+        System.out.println("testGetInsuranceListByInsuranceStatus 테스트 성공");
     }
 
     @Test
@@ -113,5 +116,66 @@ class InsuranceControllerTest {
 
         verify(insuranceService, times(1)).getInsuranceListByInsuranceTypeAndInsuranceStatus(request.getType(), request.getStatus());
         verifyNoMoreInteractions(insuranceService);
+        System.out.println("testGetInsuranceListByInsuranceTypeAndInsuranceStatus 테스트 성공");
+    }
+    @Test
+    void testGetInsuranceById() {
+        Integer selectedInsuranceId = 1;
+        Insurance insurance = new Insurance();
+        when(insuranceService.getInsuranceById(selectedInsuranceId)).thenReturn(new ResponseEntity<>(insurance, HttpStatus.OK));
+
+        ResponseEntity<Insurance> response = insuranceController.getInsuranceById(selectedInsuranceId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(insurance, response.getBody());
+
+        verify(insuranceService, times(1)).getInsuranceById(selectedInsuranceId);
+        System.out.println("testGetInsuranceById 테스트 성공");
+    }
+
+    @Test
+    void testPostInsurance() {
+        Insurance insurance = new Insurance();
+        when(insuranceService.postInsurance(insurance)).thenReturn(new ResponseEntity<>(insurance.getId(), HttpStatus.OK));
+
+        ResponseEntity<Integer> response = insuranceController.postInsurance(insurance);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(insurance.getId(), response.getBody());
+
+        verify(insuranceService, times(1)).postInsurance(insurance);
+        System.out.println("testPostInsurance 테스트 성공");
+    }
+
+    @Test
+    void testPatchInsuranceStatusInInsuranceById() {
+        HashMap<String, String> param = new HashMap<>();
+        param.put("id", "1");
+        param.put("status", "UnderAuthorize");
+
+        when(insuranceService.patchInsuranceStatusInInsuranceById(1, InsuranceStatus.UnderAuthorize))
+                .thenReturn(new ResponseEntity<>(true, HttpStatus.OK));
+
+        ResponseEntity<Boolean> response = insuranceController.patchInsuranceStatusInInsuranceById(param);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody());
+
+        verify(insuranceService, times(1)).patchInsuranceStatusInInsuranceById(1, InsuranceStatus.UnderAuthorize);
+        System.out.println("testPatchInsuranceStatusInInsuranceById 테스트 성공");
+    }
+
+    @Test
+    void testGetInsuranceByName() {
+        String name = "SampleInsuranceName";
+        when(insuranceService.getInsuranceByName(name)).thenReturn(new ResponseEntity<>(true, HttpStatus.OK));
+
+        ResponseEntity<Boolean> response = insuranceController.getInsuranceByName(name);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody());
+
+        verify(insuranceService, times(1)).getInsuranceByName(name);
+        System.out.println("testGetInsuranceByName 테스트 성공");
     }
 }

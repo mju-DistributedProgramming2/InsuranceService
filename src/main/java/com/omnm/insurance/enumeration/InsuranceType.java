@@ -1,4 +1,4 @@
-package com.omnm.insurance.enumeration.insurance;
+package com.omnm.insurance.enumeration;
 
 public enum InsuranceType {
 

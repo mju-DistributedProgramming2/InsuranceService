@@ -1,7 +1,7 @@
 package com.omnm.insurance.DTO;
 
-import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
-import com.omnm.insurance.enumeration.insurance.InsuranceType;
+import com.omnm.insurance.enumeration.InsuranceStatus;
+import com.omnm.insurance.enumeration.InsuranceType;
 
 public class GetInsuranceListByInsuranceTypeAndInsuranceStatusRequest {
     InsuranceType type;

@@ -1,4 +1,4 @@
-package com.omnm.insurance;
+package com.omnm.insurance.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

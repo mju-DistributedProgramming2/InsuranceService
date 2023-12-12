@@ -1,7 +1,7 @@
 package com.omnm.insurance.Repository;
 
 import com.omnm.insurance.Entity.Insurance;
-import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
+import com.omnm.insurance.enumeration.InsuranceStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

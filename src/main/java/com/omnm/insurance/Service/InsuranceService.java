@@ -1,8 +1,8 @@
 package com.omnm.insurance.Service;
 
 import com.omnm.insurance.DTO.InsuranceList;
-import com.omnm.insurance.enumeration.insurance.InsuranceStatus;
-import com.omnm.insurance.enumeration.insurance.InsuranceType;
+import com.omnm.insurance.enumeration.InsuranceStatus;
+import com.omnm.insurance.enumeration.InsuranceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,7 @@ public class InsuranceService implements InsuranceServiceIF {
         long beforeTime = System.currentTimeMillis();
         List<Insurance> insuranceList = this.insuranceDAO.findInsurance();
         if(insuranceList.isEmpty()) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(404));
-//        try {Thread.sleep(7000);}
-//        catch (InterruptedException e) {throw new RuntimeException(e);}
+
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
         if(secDiffTime>=7) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(500));
@@ -36,8 +35,6 @@ public class InsuranceService implements InsuranceServiceIF {
         long beforeTime = System.currentTimeMillis();
         List<Insurance> insuranceList = this.insuranceDAO.findByStatus(insuranceStatus);
         if(insuranceList.isEmpty()) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(404));
-//        try {Thread.sleep(7000);}
-//        catch (InterruptedException e) {throw new RuntimeException(e);}
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
         if(secDiffTime>=7) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(500));
@@ -52,8 +49,6 @@ public class InsuranceService implements InsuranceServiceIF {
         }
         if(insuranceList.isEmpty()) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(404));
 
-//        try {Thread.sleep(7000);}
-//        catch (InterruptedException e) {throw new RuntimeException(e);}
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime)/1000;
         if(secDiffTime>=7) return new ResponseEntity<>(new InsuranceList(insuranceList), new HttpHeaders(), HttpStatus.valueOf(500));
@@ -78,7 +73,7 @@ public class InsuranceService implements InsuranceServiceIF {
         Insurance insurance = this.insuranceDAO.findById(id);
         insurance.setStatus(status);
         this.insuranceDAO.updateInsuranceStatusInInsuranceById(id, status);
-        return new ResponseEntity<>(this.insuranceDAO.findById(id).getStatus() == status, new HttpHeaders(), HttpStatus.valueOf(200));
+        return new ResponseEntity<>(insurance.getStatus() == status, new HttpHeaders(), HttpStatus.valueOf(200));
     }
     @Override
     public ResponseEntity<Boolean> getInsuranceByName(String name) {
