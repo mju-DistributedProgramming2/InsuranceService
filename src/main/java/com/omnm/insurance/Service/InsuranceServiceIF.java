@@ -23,4 +23,6 @@ public interface InsuranceServiceIF {
     ResponseEntity<Boolean> patchInsuranceStatusInInsuranceById(Integer id, InsuranceStatus status);
 
     ResponseEntity<Boolean> getInsuranceByName(String name);
+
+    ResponseEntity<InsuranceType> getInsuranceTypeById(Integer id);
 }

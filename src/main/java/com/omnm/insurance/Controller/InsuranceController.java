@@ -6,6 +6,7 @@ import com.omnm.insurance.DTO.InsuranceList;
 import com.omnm.insurance.Entity.Insurance;
 import com.omnm.insurance.enumeration.InsuranceStatus;
 import com.omnm.insurance.Service.InsuranceService;
+import com.omnm.insurance.enumeration.InsuranceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,9 @@ public class InsuranceController {
     @GetMapping("/check-name")
     public ResponseEntity<Boolean> getInsuranceByName(@Param("name") String name) {
         return this.insuranceService.getInsuranceByName(name);
+    }
+    @GetMapping("/insurance/type/{id}")
+    public ResponseEntity<InsuranceType> getInsuranceTypeById(@PathVariable Integer id) {
+        return this.insuranceService.getInsuranceTypeById(id);
     }
 }

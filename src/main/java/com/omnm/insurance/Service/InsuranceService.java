@@ -81,4 +81,9 @@ public class InsuranceService implements InsuranceServiceIF {
         if(findByNameInsurance != null) return new ResponseEntity<>(false, new HttpHeaders(), HttpStatus.valueOf(500));
         return new ResponseEntity<>(true, new HttpHeaders(), HttpStatus.valueOf(200));
     }
+    @Override
+    public ResponseEntity<InsuranceType> getInsuranceTypeById(Integer id) {
+        Insurance insurance = this.insuranceDAO.findInsuranceById(id);
+        return  new ResponseEntity<>(insurance.getType(), new HttpHeaders(), HttpStatus.valueOf(200));
+    }
 }
